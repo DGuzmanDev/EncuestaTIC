@@ -2,9 +2,12 @@ using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 var app = builder.Build();
 
@@ -25,7 +28,7 @@ app.UseExceptionHandler("/Home/Error");
 //     { FileProvider = new PhysicalFileProvider(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "wwwroot")), RequestPath = "" });
 // else
 //     //Este caso se utiliza para ejecutarse en plataformas Windows
-//     app.UseStaticFiles();
+    app.UseStaticFiles();
 
 app.UseAuthorization();
 app.UseSession();
