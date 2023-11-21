@@ -1,27 +1,4 @@
-﻿const lenguajes = [
-    "C",
-    "C#",
-    "C++",
-    "CSS",
-    "Go",
-    "Java",
-    "Javascript",
-    "Kotlin",
-    "Objective-C",
-    "PHP",
-    "Perl",
-    "PowerShell",
-    "Python",
-    "R",
-    "Ruby",
-    "Rust",
-    "Scala",
-    "Shell",
-    "Swift",
-    "TypeScript"
-];
-
-function calcular_peso_total(resultados) {
+﻿function calcular_peso_total(resultados) {
     var peso_total = 0.0;
 
     for (let index = 0; index < resultados.length; index++) {
