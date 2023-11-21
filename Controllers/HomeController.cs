@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using EncuestaTIC.Models;
+using System.Numerics;
 
 namespace EncuestaTIC.Controllers;
 
@@ -27,6 +28,21 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpGet]
+    [Route("resultados")]
+    public List<Resultado> GetResultados()
+    {
+        List<Resultado>? resultados = HttpContext.Session.Get<List<Resultado>>(LLAVE_RESULTADOS);
+
+        if (resultados == null)
+        {
+            resultados = ObtenerListaResultadosDefault();
+            HttpContext.Session.Set(LLAVE_RESULTADOS, resultados);
+        }
+
+        return resultados;
+    }
+
     [HttpPost]
     [Route("encuesta")]
     public List<Resultado> PostNuevaEncuesta([FromBody] Encuesta encuesta)
@@ -35,7 +51,7 @@ public class HomeController : Controller
         {
             if (HttpContext.Session != null)
             {
-                List<Resultado>? resultados = HttpContext.Session.Get<List<Resultado>>(LLAVE_RESULTADOS) ?? ObtenerListaResultadosDefault();
+                List<Resultado> resultados = HttpContext.Session.Get<List<Resultado>>(LLAVE_RESULTADOS) ?? ObtenerListaResultadosDefault();
                 int indiceLenguajePrimario = resultados.FindIndex(elemento => elemento.Lenguaje.Equals(encuesta.LenguajePrimario));
                 int indiceLenguajeSecundario = resultados.FindIndex(elemento => elemento.Lenguaje.Equals(encuesta.LenguajeSecundario));
 
@@ -43,9 +59,10 @@ public class HomeController : Controller
                 {
                     resultados.ElementAt(indiceLenguajePrimario).Peso++;
                     resultados.ElementAt(indiceLenguajeSecundario).Peso += 0.5;
+                    OrdenarResultados(resultados);
                     HttpContext.Session.Set(LLAVE_RESULTADOS, resultados);
 
-                    List<Encuesta>? encuestados = HttpContext.Session.Get<List<Encuesta>>(LLAVE_ENCUESTADOS) ?? new List<Encuesta>();
+                    List<Encuesta> encuestados = HttpContext.Session.Get<List<Encuesta>>(LLAVE_ENCUESTADOS) ?? new List<Encuesta>();
                     encuestados.Add(encuesta);
                     HttpContext.Session.Set(LLAVE_ENCUESTADOS, encuestados);
                 }
@@ -67,7 +84,15 @@ public class HomeController : Controller
         }
     }
 
-    private List<Resultado> ObtenerListaResultadosDefault()
+    private static void OrdenarResultados(List<Resultado> resultados)
+    {
+        resultados.Sort((a, b) =>
+        {
+            return b.Peso.CompareTo(a.Peso);
+        });
+    }
+
+    private static List<Resultado> ObtenerListaResultadosDefault()
     {
         return new List<Resultado>
         {
@@ -77,7 +102,7 @@ public class HomeController : Controller
             new("CSS",0),
             new("Go",0),
             new("Java",0),
-            new("Javascript",0),
+            new("JavaScript",0),
             new("Kotlin",0),
             new("Objective-C",0),
             new("PHP",0),
