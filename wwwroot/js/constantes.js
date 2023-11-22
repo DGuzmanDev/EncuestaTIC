@@ -1,3 +1,11 @@
+const roles = [
+    "Programador Front-end",
+    "Programador Backe-end",
+    "Analista de sistemas",
+    "Diseño gráfico",
+    "Adminitrador de proyectos de TI"
+]
+
 const lenguajes = [
     "C",
     "C#",
