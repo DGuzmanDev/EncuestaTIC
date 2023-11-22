@@ -1,8 +1,28 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Índice de Resultados";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Índice de Resultados</h1>
+</div>
+
+<div class="container">
+    <section class="my-2 py-2">
+        <section id="tabla_resultados" class="mt-4">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Posición</th>
+                            <th>Nombre</th>
+                            <th>Índice porcentual</th>
+                            <th>Diferencia porcentual relativa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="result-body">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
 </div>
