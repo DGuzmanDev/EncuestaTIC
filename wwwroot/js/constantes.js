@@ -1,6 +1,6 @@
 const roles = [
     "Programador Front-end",
-    "Programador Backe-end",
+    "Programador Back-end",
     "Analista de sistemas",
     "Diseño gráfico",
     "Adminitrador de proyectos de TI"
